@@ -12,30 +12,24 @@
 </style>
 
 <script>
+import axios from "axios";
 export default {
   data: function() {
     return {
       message: "Hello World",
-      recipes: [
-        {
-          id: 1,
-          title: "Raw Eggs",
-          prep_time: 3
-        },
-        {
-          id: 2,
-          title: "Empty Sandwich",
-          prep_time: 5
-        },
-        {
-          id: 3,
-          title: "Ice Cubes",
-          prep_time: 80
-        }
-      ]
+      recipes: []
     };
   },
-  created: function() {},
-  methods: {}
+  created: function() {
+    this.indexRecipes();
+  },
+  methods: {
+    indexRecipes: function() {
+      axios.get("/api/recipes").then(response => {
+        console.log("All Recipes:", response.data);
+        this.recipes = response.data;
+      });
+    }
+  }
 };
 </script>
