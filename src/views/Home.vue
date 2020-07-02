@@ -24,11 +24,11 @@
     <dialog id="recipe-details">
       <form method="dialog">
         <h1>Recipe Info</h1>
-        <p>Title: ...</p>
-        <p>Directions: ...</p>
-        <p>Ingredients: ...</p>
-        <p>Prep Time: ...</p>
-        <p>Image: ...</p>
+        <p>Title: {{ currentRecipe.title }}<p>
+        <img v-bind:src="currentRecipe.image_url" alt="">
+        <p>Directions: {{ currentRecipe.directions }}</p>
+        <p>Ingredients: {{ currentRecipe.ingredients }}</p>
+        <p>Prep Time: {{ currentRecipe.prep_time }}</p>
         <button>Close</button>
       </form>
     </dialog>
@@ -53,7 +53,8 @@ export default {
       newRecipeIngredients: "",
       newRecipeDirections: "",
       newRecipePrepTime: "",
-      newRecipeImageUrl: ""
+      newRecipeImageUrl: "",
+      currentRecipe: {}
     };
   },
   created: function() {
@@ -87,6 +88,7 @@ export default {
     },
     showRecipe: function(recipe) {
       console.log(recipe);
+      this.currentRecipe = recipe;
       document.querySelector("#recipe-details").showModal();
     }
   }
