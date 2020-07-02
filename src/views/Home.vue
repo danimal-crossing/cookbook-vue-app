@@ -15,10 +15,24 @@
     </div>
 
     <div v-for="recipe in recipes">
-      <h2>Title: {{ recipe.title }}</h2>
+      <h2>{{ recipe.title }}</h2>
       <img v-bind:src="recipe.image_url" alt="">
       <p>Prep time: {{ recipe.prep_time }}</p>
+      <button v-on:click="showRecipe(recipe)">More Info</button>
     </div>
+
+    <dialog id="recipe-details">
+      <form method="dialog">
+        <h1>Recipe Info</h1>
+        <p>Title: ...</p>
+        <p>Directions: ...</p>
+        <p>Ingredients: ...</p>
+        <p>Prep Time: ...</p>
+        <p>Image: ...</p>
+        <button>Close</button>
+      </form>
+    </dialog>
+
   </div>
 </template>
 
@@ -70,6 +84,10 @@ export default {
           console.log(error.response.data.errors);
           this.errors = error.response.data.errors;
         });
+    },
+    showRecipe: function(recipe) {
+      console.log(recipe);
+      document.querySelector("#recipe-details").showModal();
     }
   }
 };
