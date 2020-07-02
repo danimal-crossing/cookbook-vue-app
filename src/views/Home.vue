@@ -4,7 +4,16 @@
     <ul>
       <li v-for="error in errors">{{ error }}</li>
     </ul>
-    <button v-on:click="createRecipe()">Create</button>
+
+    <div>
+      Title: <input type="text" v-model="newRecipeTitle"> <br>
+      Ingredients: <input type="text" v-model="newRecipeIngredients"> <br>
+      Directions: <input type="text" v-model="newRecipeDirections"> <br>
+      Prep Time: <input type="text" v-model="newRecipePrepTime"> <br>
+      Image Url: <input type="text" v-model="newRecipeImageUrl"> <br>
+      <button v-on:click="createRecipe()">Create</button>
+    </div>
+
     <div v-for="recipe in recipes">
       <h2>Title: {{ recipe.title }}</h2>
       <img v-bind:src="recipe.image_url" alt="">
@@ -25,7 +34,12 @@ export default {
   data: function() {
     return {
       recipes: [],
-      errors: []
+      errors: [],
+      newRecipeTitle: "",
+      newRecipeIngredients: "",
+      newRecipeDirections: "",
+      newRecipePrepTime: "",
+      newRecipeImageUrl: ""
     };
   },
   created: function() {
@@ -40,13 +54,12 @@ export default {
     },
     createRecipe: function() {
       var params = {
-        title: "example title",
-        ingredients: "example ingredients",
-        directions: "example directions",
-        prep_time: "example prep_time",
-        image_url: "example image_url"
+        title: this.newRecipeTitle,
+        ingredients: this.newRecipeIngredients,
+        directions: this.newRecipeDirections,
+        prep_time: this.newRecipePrepTime,
+        image_url: this.newRecipeImageUrl
       };
-
       axios
         .post("/api/recipes", params)
         .then(response => {
