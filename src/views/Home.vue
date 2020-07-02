@@ -33,6 +33,7 @@
         <p>Prep Time: <input type="text" v-model="currentRecipe.prep_time"></p>
         <p>Image Url: <input type="text" v-model="currentRecipe.image_url"></p>
         <button v-on:click="updateRecipe(currentRecipe)">Update</button>
+        <button v-on:click="destroyRecipe(currentRecipe)">Delete</button>
         <button>Close</button>
       </form>
     </dialog>
@@ -113,6 +114,13 @@ export default {
           console.log(error.response.data.errors);
           // this.updateErrors = error.response.data.errors;
         });
+    },
+    destroyRecipe: function(recipe) {
+      axios.delete(`/api/recipes/${recipe.id}`).then(response => {
+        console.log("Successfully destroyed", response.data);
+        var index = this.recipes.indexOf(recipe);
+        this.recipes.splice(index, 1);
+      });
     }
   }
 };
