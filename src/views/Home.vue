@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    
     <h1>New Recipe</h1>
     <ul>
       <li v-for="error in createErrors">{{ error }}</li>
