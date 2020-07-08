@@ -5,6 +5,8 @@
     <p>Ingredients: {{ recipe.ingredients }}</p>
     <p>Directions: {{ recipe.directions }}</p>
     <p>Prep Time: {{ recipe.prep_time }}</p>
+
+    <router-link :to="`/recipes/${recipe.id}/edit`">Edit</router-link>
   </div>
 </template>
 

@@ -58,8 +58,8 @@ export default {
       axios
         .post("/api/recipes", params)
         .then(response => {
-          // redirect to recipes index
-          this.$router.push("/recipes");
+          // redirect to recipes show
+          this.$router.push(`/recipes/${reponse.data.id}`);
         })
         .catch(error => {
           this.errors = error.response.data.errors;
