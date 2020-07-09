@@ -15,7 +15,12 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div v-for="recipe in recipes">
+
+    <div>Search: <input type="text" v-model="titleFilter" list="titles" /></div>
+    <datalist id="titles">
+      <option v-for="recipe in recipes">{{ recipe.title }}</option>
+    </datalist>
+    <div v-for="recipe in filterBy(recipes, titleFilter, 'title')">
       <h2>{{ recipe.title }}</h2>
       <img v-bind:src="recipe.image_url" alt="" />
       <p>Prep time: {{ recipe.prep_time }}</p>
@@ -28,10 +33,13 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+import Vue2Filters from "vue2-filters";
 export default {
+  mixins: [Vue2Filters.mixin],
   data: function() {
     return {
       recipes: [],
+      titleFilter: "",
     };
   },
   created: function() {
