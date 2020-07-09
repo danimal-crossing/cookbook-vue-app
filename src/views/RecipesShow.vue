@@ -1,12 +1,13 @@
 <template>
   <div class="recipes-show">
     <h2>{{ recipe.title }}</h2>
-    <img :src="recipe.image_url" alt="">
+    <img :src="recipe.image_url" alt="" />
     <p>Ingredients: {{ recipe.ingredients }}</p>
     <p>Directions: {{ recipe.directions }}</p>
     <p>Prep Time: {{ recipe.prep_time }}</p>
+    <p>Author: {{ recipe.user.name }}</p>
 
-    <router-link :to="`/recipes/${recipe.id}/edit`">Edit</router-link> <br>
+    <router-link :to="`/recipes/${recipe.id}/edit`">Edit</router-link> <br />
     <button v-on:click="destroyRecipe()">Delete</button>
   </div>
 </template>
@@ -16,11 +17,11 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      recipe: {}
+      recipe: {},
     };
   },
   created: function() {
-    axios.get(`/api/recipes/${this.$route.params.id}`).then(response => {
+    axios.get(`/api/recipes/${this.$route.params.id}`).then((response) => {
       console.log(response.data);
       this.recipe = response.data;
     });
@@ -28,12 +29,12 @@ export default {
   methods: {
     destroyRecipe: function() {
       if (confirm("Are you sure you want to delete this recipe?")) {
-        axios.delete(`/api/recipes/${this.recipe.id}`).then(response => {
+        axios.delete(`/api/recipes/${this.recipe.id}`).then((response) => {
           console.log("Successfully destroyed", response.data);
           this.$router.push("/recipes");
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
