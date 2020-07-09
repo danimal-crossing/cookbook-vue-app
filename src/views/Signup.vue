@@ -1,7 +1,11 @@
 <template>
   <div class="signup">
     <form v-on:submit.prevent="submit()">
-      <h1>Signup</h1>
+      <div class="text-center">
+        <h1>Signup</h1>
+        <img v-if="status" :src="`https://http.cat/${status}`" alt="" />
+      </div>
+
       <ul>
         <li class="text-danger" v-for="error in errors">{{ error }}</li>
       </ul>
@@ -53,6 +57,7 @@ export default {
       password: "",
       passwordConfirmation: "",
       errors: [],
+      status: "",
     };
   },
   methods: {
@@ -69,6 +74,7 @@ export default {
           this.$router.push("/login");
         })
         .catch((error) => {
+          this.status = error.response.status;
           this.errors = error.response.data.errors;
         });
     },
