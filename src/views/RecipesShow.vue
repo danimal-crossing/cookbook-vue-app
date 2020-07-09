@@ -7,12 +7,12 @@
     <p>Prep Time: {{ recipe.prep_time }}</p>
     <p>Author: {{ recipe.user.name }}</p>
 
-    Logged in User Id: {{ $parent.getUserId() }} <br />
-    Recipe User Id: {{ recipe.user.id }}
+    <!-- Logged in User Id: {{ $parent.getUserId() }} <br />
+    Recipe User Id: {{ recipe.user.id }} -->
 
     <br />
 
-    <div v-if="$parent.getUserId() == recipe.user.id">
+    <div v-if="recipe.owner">
       <router-link :to="`/recipes/${recipe.id}/edit`">Edit</router-link> <br />
       <button v-on:click="destroyRecipe()">Delete</button>
     </div>
