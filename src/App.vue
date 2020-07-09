@@ -48,6 +48,11 @@
 
 <script>
 export default {
+  data: function() {
+    return {
+      flashMessage: "",
+    };
+  },
   methods: {
     // returns true or false depending on jwt in localstorage
     isLoggedIn: function() {

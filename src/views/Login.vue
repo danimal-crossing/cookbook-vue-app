@@ -1,5 +1,21 @@
 <template>
   <div class="login">
+    <div
+      v-if="$parent.flashMessage"
+      class="alert alert-warning alert-dismissible fade show"
+      role="alert"
+    >
+      {{ $parent.flashMessage }}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
     <form v-on:submit.prevent="submit()">
       <h1>Login</h1>
       <ul>
@@ -42,7 +58,8 @@ export default {
             "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
           // localStorage.setItem("user_id", response.data.user_id);
-          this.$router.push("/");
+          this.$parent.flashMessage = "Successfully logged in!";
+          this.$router.push("/recipes");
         })
         .catch((error) => {
           this.errors = ["Invalid email or password."];

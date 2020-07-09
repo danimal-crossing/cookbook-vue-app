@@ -71,6 +71,7 @@ export default {
       axios
         .post("/api/users", params)
         .then((response) => {
+          this.$parent.flashMessage = "Successfully signed up!";
           this.$router.push("/login");
         })
         .catch((error) => {
