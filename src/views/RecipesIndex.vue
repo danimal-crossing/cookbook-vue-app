@@ -16,16 +16,37 @@
       </button>
     </div>
 
-    <div>Search: <input type="text" v-model="titleFilter" list="titles" /></div>
+    <div class="form-group">
+      <input class="form-control" v-model="titleFilter" list="titles" type="text" placeholder="Search">
+    </div>
     <datalist id="titles">
       <option v-for="recipe in recipes">{{ recipe.title }}</option>
     </datalist>
-    <div v-for="recipe in filterBy(recipes, titleFilter, 'title')">
-      <h2>{{ recipe.title }}</h2>
-      <img v-bind:src="recipe.image_url" alt="" />
-      <p>Prep time: {{ recipe.prep_time }}</p>
-      <p>Created {{ relativeDate(recipe.created_at) }}</p>
-      <router-link v-bind:to="`/recipes/${recipe.id}`">More Info</router-link>
+
+
+    <div id="fh5co-work-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+            <h2>All Recipes</h2>
+            <p>Specially curated by demon cats for your taste buds</p>
+          </div>
+        </div>
+        <div class="row">
+          <div v-for="recipe in filterBy(recipes, titleFilter, 'title')" class="col-md-4">
+            <router-link v-bind:to="`/recipes/${recipe.id}`" class="item-grid text-center">
+              <div class="image" :style="`background-image: url(${recipe.image_url})`"></div>
+              <div class="v-align">
+                <div class="v-align-middle">
+                  <h3 class="title">{{ recipe.title }}</h3>
+                  <h5 class="category">Prep Time: {{ recipe.prep_time }}</h5>
+                  <h5 class="category">Created {{ relativeDate(recipe.created_at) }}</h5>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -39,11 +60,11 @@ export default {
   data: function() {
     return {
       recipes: [],
-      titleFilter: "",
+      titleFilter: ""
     };
   },
   created: function() {
-    axios.get("/api/recipes").then((response) => {
+    axios.get("/api/recipes").then(response => {
       console.log("All Recipes:", response.data);
       this.recipes = response.data;
     });
@@ -51,7 +72,7 @@ export default {
   methods: {
     relativeDate: function(date) {
       return moment(date).fromNow();
-    },
-  },
+    }
+  }
 };
 </script>
