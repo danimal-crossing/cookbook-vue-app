@@ -37,8 +37,8 @@
             <p>Specially curated by demon cats for your taste buds</p>
           </div>
         </div>
-        <div class="row">
-          <div v-for="recipe in orderBy(filterBy(recipes, titleFilter), sortAttribute)" class="col-md-4">
+        <div is="transition-group" class="row" appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+          <div v-for="recipe in orderBy(filterBy(recipes, titleFilter), sortAttribute)" v-bind:key="recipe.id" class="col-md-4">
             <router-link v-bind:to="`/recipes/${recipe.id}`" class="item-grid text-center">
               <div class="image" :style="`background-image: url(${recipe.image_url})`"></div>
               <div class="v-align">
