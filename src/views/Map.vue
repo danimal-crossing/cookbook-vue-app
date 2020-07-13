@@ -27,6 +27,15 @@ export default {
       center: [-122.4194, 37.7749], // starting position [lng, lat]
       zoom: 13 // starting zoom
     });
+    // create the popup
+    var popup = new mapboxgl.Popup({ offset: 25 }).setText(
+      "Market Street, historic SF Jazz location"
+    );
+    // create the marker
+    var marker = new mapboxgl.Marker()
+      .setLngLat([-122.4194, 37.7749])
+      .setPopup(popup) // sets a popup on this marker
+      .addTo(map);
   },
   methods: {}
 };
