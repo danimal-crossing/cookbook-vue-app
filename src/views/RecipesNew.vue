@@ -22,8 +22,8 @@
         <input type="text" class="form-control" v-model="prepTime" />
       </div>
       <div class="form-group">
-        <label>Image Url:</label>
-        <input type="text" class="form-control" v-model="imageUrl" />
+        <label>Image:</label>
+        <input class="form-control" type="file" v-on:change="setFile($event)" ref="fileInput">
       </div>
       <input type="submit" class="btn btn-primary" value="Create" />
     </form>
@@ -40,29 +40,33 @@ export default {
       ingredients: "",
       directions: "",
       prepTime: "",
-      imageUrl: "",
+      imageFile: ""
     };
   },
   created: function() {},
   methods: {
+    setFile: function(event) {
+      if (event.target.files.length > 0) {
+        this.imageFile = event.target.files[0];
+      }
+    },
     createRecipe: function() {
-      var params = {
-        title: this.title,
-        ingredients: this.ingredients,
-        directions: this.directions,
-        prep_time: this.prepTime,
-        image_url: this.imageUrl,
-      };
+      var formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("ingredients", this.ingredients);
+      formData.append("directions", this.directions);
+      formData.append("prep_time", this.prepTime);
+      formData.append("image_file", this.imageFile);
       axios
-        .post("/api/recipes", params)
-        .then((response) => {
+        .post("/api/recipes", formData)
+        .then(response => {
           // redirect to recipes show
           this.$router.push(`/recipes/${response.data.id}`);
         })
-        .catch((error) => {
+        .catch(error => {
           this.errors = error.response.data.errors;
         });
-    },
-  },
+    }
+  }
 };
 </script>
